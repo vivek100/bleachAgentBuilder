@@ -2,6 +2,8 @@
 
 A sophisticated AI-powered agent generation platform built on Google's Agent Development Kit (ADK). This project provides both a powerful backend meta-agent system and a modern web interface for creating custom AI agents through natural language descriptions.
 
+![Screenshot 2025-06-24 050744](https://github.com/user-attachments/assets/8ecef2c8-d762-475c-88c0-b4bb9386308e)
+
 ## 🌟 Overview
 
 BleachAgentBuilder transforms the complex process of AI agent development into an intuitive, conversation-driven experience. Simply describe what you want your agent to do, and the system will:
@@ -13,19 +15,145 @@ BleachAgentBuilder transforms the complex process of AI agent development into a
 
 ## 🏗️ Architecture
 
+### System Architecture Overview
+
+```mermaid
+graph TB
+    subgraph "🌐 Frontend - Next.js"
+        UI["`🏠 **Landing Page**<br/>React + Tailwind`"]
+        Chat["`💬 **Chat Interface**<br/>Natural Language`"]
+        Graph["`📊 **Visual Graph**<br/>ReactFlow`"]
+        Editor["`💻 **Code Editor**<br/>Monaco Editor`"]
+        Config["`⚙️ **Config Panel**<br/>Dynamic Forms`"]
+    end
+
+    subgraph "🔌 API Layer"
+        REST["`🌍 **REST API**<br/>FastAPI`"]
+        WS["`⚡ **WebSocket**<br/>Real-time`"]
+    end
+
+    subgraph "🤖 Meta-Agent System"
+        Orchestrator["`🎯 **Main Agent**<br/>Google ADK`"]
+    end
+    
+    subgraph "🧠 Sub-Agents"
+        ReqAnalyzer["`📝 **Requirements**<br/>Analyzer`"]
+        ArchPlanner["`🏗️ **Architecture**<br/>Planner`"]
+        AgentBuilder["`🔧 **Agent**<br/>Builder`"]
+        ToolBuilder["`🛠️ **Tool**<br/>Builder`"]
+    end
+    
+    subgraph "⚡ Core Services"
+        ConfigMerger["`🔄 **Config**<br/>Merger`"]
+        CodeGen["`📦 **Code**<br/>Generator`"]
+        Validator["`✅ **Config**<br/>Validator`"]
+    end
+
+    subgraph "💾 Data Layer"
+        SessionDB["`🗃️ **Session**<br/>Storage`"]
+        FileSystem["`📁 **File**<br/>System`"]
+        Templates["`📋 **Code**<br/>Templates`"]
+    end
+
+    subgraph "🎁 Generated Output"
+        AgentCode["`🐍 **agent.py**<br/>ADK Implementation`"]
+        CustomTools["`🔨 **tools.py**<br/>Custom Functions`"]
+        Dependencies["`📦 **requirements.txt**<br/>Dependencies`"]
+        Documentation["`📖 **README.md**<br/>Documentation`"]
+    end
+
+    %% Flow connections
+    UI --> Chat
+    Chat --> REST
+    REST --> Orchestrator
+    
+    Orchestrator --> ReqAnalyzer
+    ReqAnalyzer --> ArchPlanner
+    ArchPlanner --> AgentBuilder
+    AgentBuilder --> ToolBuilder
+    
+    AgentBuilder --> ConfigMerger
+    ToolBuilder --> ConfigMerger
+    ConfigMerger --> CodeGen
+    CodeGen --> Validator
+    
+    Validator --> AgentCode
+    Validator --> CustomTools
+    Validator --> Dependencies
+    Validator --> Documentation
+    
+    ConfigMerger --> WS
+    WS --> Graph
+    WS --> Editor
+    WS --> Config
+    
+    Templates --> CodeGen
+    SessionDB --> ConfigMerger
+    AgentCode --> FileSystem
+
+    %% Styling with dark black text
+    classDef frontend fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000000
+    classDef backend fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000000
+    classDef subagents fill:#f1f8e9,stroke:#689f38,stroke-width:2px,color:#000000
+    classDef services fill:#e8eaf6,stroke:#3f51b5,stroke-width:2px,color:#000000
+    classDef data fill:#e8f5e8,stroke:#388e3c,stroke-width:2px,color:#000000
+    classDef output fill:#fff8e1,stroke:#f57c00,stroke-width:2px,color:#000000
+    classDef api fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#000000
+
+    class UI,Chat,Graph,Editor,Config frontend
+    class Orchestrator backend
+    class ReqAnalyzer,ArchPlanner,AgentBuilder,ToolBuilder subagents
+    class ConfigMerger,CodeGen,Validator services
+    class SessionDB,FileSystem,Templates data
+    class AgentCode,CustomTools,Dependencies,Documentation output
+    class REST,WS api
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    BleachAgentBuilder                       │
-├─────────────────────────┬───────────────────────────────────┤
-│        Backend          │           Frontend                │
-│   (Meta-Agent System)   │      (Next.js Web App)           │
-├─────────────────────────┼───────────────────────────────────┤
-│ • Requirements Analyzer │ • Agent Configuration UI         │
-│ • Architecture Planner  │ • Visual Agent Graph             │
-│ • Agent Builder         │ • Code Editor & Preview          │
-│ • Tool Builder          │ • Chat Interface                 │
-│ • Code Generator        │ • Project Management             │
-└─────────────────────────┴───────────────────────────────────┘
+
+### Process Flow & Sequence
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend as "Next.js Frontend"
+    participant API as "REST API"
+    participant Orchestrator as "Meta-Agent Orchestrator"
+    participant ReqAnalyzer as "Requirements Analyzer"
+    participant ArchPlanner as "Architecture Planner"
+    participant AgentBuilder as "Agent Builder"
+    participant ToolBuilder as "Tool Builder"
+    participant CodeGen as "Code Generator"
+    participant Output as "Generated Files"
+
+    User->>Frontend: "Create a research agent with web search"
+    Frontend->>API: POST /create-agent
+    API->>Orchestrator: Natural language request
+    
+    Note over Orchestrator: Google ADK Meta-Agent System
+    
+    Orchestrator->>ReqAnalyzer: Analyze requirements
+    ReqAnalyzer-->>Orchestrator: Structured requirements
+    
+    Orchestrator->>ArchPlanner: Design architecture
+    ArchPlanner-->>Orchestrator: Agent structure plan
+    
+    loop For each agent in plan
+        Orchestrator->>AgentBuilder: Create agent config
+        AgentBuilder-->>Orchestrator: Agent configuration
+    end
+    
+    loop For each tool needed
+        Orchestrator->>ToolBuilder: Create custom tool
+        ToolBuilder-->>Orchestrator: Tool implementation
+    end
+    
+    Orchestrator->>CodeGen: Generate Python code
+    CodeGen->>Output: Create agent.py, requirements.txt, README.md
+    
+    CodeGen-->>API: Generation complete + file paths
+    API-->>Frontend: WebSocket update with progress
+    Frontend-->>User: Visual graph + code preview
+    
+    Note over User,Output: Technologies Used:<br/>Frontend: Next.js, React, Tailwind CSS, ReactFlow<br/>Backend: Google ADK, Python, Pydantic<br/>API: FastAPI/Express, WebSocket<br/>Output: Complete Python ADK Project
 ```
 
 ## 🚀 Features
