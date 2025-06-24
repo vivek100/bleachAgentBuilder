@@ -1,0 +1,19 @@
+{
+  "session_id": "test-current-dir",
+  "project_name": "my_test_agent",
+  "generated_at": "2025-06-24T03:05:16.888761",
+  "output_directory": "C:\\Users\\shukl\\Desktop\\projects\\gadkhack\\mainADKPython\\adk-python\\contributing\\samples\\agent_generator_with_config",
+  "generated_files": [
+    "agent.py",
+    "__init__.py",
+    "requirements.txt",
+    "README.md"
+  ],
+  "agent_count": 1,
+  "tool_count": 0,
+  "main_agent": "main_agent",
+  "agents": [
+    "main_agent"
+  ],
+  "tools": []
+}

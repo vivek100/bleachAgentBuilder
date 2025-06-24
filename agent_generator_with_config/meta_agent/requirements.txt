@@ -1,0 +1,16 @@
+# Agent Creator Meta-Agent Requirements
+
+# Core ADK dependency
+google-adk>=1.0.0
+
+# Configuration and data validation
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+
+# JSON handling and utilities
+python-dotenv>=1.0.0
+
+# Optional: Enhanced functionality
+# requests>=2.31.0  # For HTTP tools
+# pandas>=2.0.0     # For data processing tools  
+# beautifulsoup4>=4.12.0  # For web scraping tools 

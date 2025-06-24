@@ -1,0 +1,26 @@
+{
+  "session_id": "session_20250124_143022",
+  "project_name": "weather_forecast_agent",
+  "generated_at": "2025-06-24T04:01:50.358551",
+  "output_directory": "C:\\Users\\shukl\\Desktop\\projects\\gadkhack\\mainADKPython\\adk-python\\contributing\\samples\\agent_generator_with_config\\generated_agents",
+  "generated_files": [
+    "agent.py",
+    "__init__.py",
+    "requirements.txt",
+    "README.md"
+  ],
+  "agent_count": 5,
+  "tool_count": 2,
+  "main_agent": "forecaster",
+  "agents": [
+    "location_identifier",
+    "weather_fetcher",
+    "weather_agent",
+    "weather_data_retriever",
+    "forecaster"
+  ],
+  "tools": [
+    "web_search",
+    "weather_api"
+  ]
+}
